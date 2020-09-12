@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/upload', upload.single('file'), async (req, res) => {
-  let pathname = './import-data.xlsx'
+  let pathname = req.body.filename
   var wb = XLSX.readFile(pathname)
   let name_ws = wb.SheetNames[0]
   var worksheet = wb.Sheets[name_ws]
@@ -18,7 +18,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     console.log(it)
   })
 
-  // helper.delete_file(pathname)
+  helper.delete_file(pathname)
   res.json({
     status: 'success',
     data: json
